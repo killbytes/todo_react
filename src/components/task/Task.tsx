@@ -16,6 +16,20 @@ function Task(props: TaskProps) {
   const removeTask = () => {
     props.setTasks((tasks) => tasks.filter((it) => it.id !== id));
   };
+
+  const editTask = () => {
+    props.setTasks((tasks) =>
+      tasks.map((it) => {
+        const prevObj = it;
+        if ( it === props.task ) {
+            console.log(it)
+          return { ...prevObj, isEditing: !it.isEditing };
+        }
+        return it;
+      })
+    );
+  };
+
   const setIsCompleted = useCallback(
     (isCompleted: boolean) =>
       props.setTasks((prevTasks) =>
@@ -43,7 +57,7 @@ function Task(props: TaskProps) {
           <span className="description">{description}</span>
           <span className="created">{formatDistanceToNow(createdAt)}</span>
         </label>
-        <button className="icon icon-edit"></button>
+        <button className="icon icon-edit" onClick={editTask}></button>
         <button className="icon icon-destroy" onClick={removeTask}></button>
       </div>
       {isEditing && <input type="text" className="edit" value={description} />}
