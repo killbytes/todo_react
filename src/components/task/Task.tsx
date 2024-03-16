@@ -1,7 +1,7 @@
 import './task.css';
 import { TTask } from 'src/components/app/App';
 import { formatDistanceToNow } from 'date-fns';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { SetterOrUpdater } from '../../utils/types';
 // import { compareAsc, format } from "date-fns";
 
@@ -21,6 +21,7 @@ function Task(props: TaskProps) {
     task: { id, isCompleted, isEditing, createdAt, description },
     setTasks,
   } = props;
+  const [editDescription, setEditDescription] = useState(description);
 
   const removeTask = () => {
     props.setTasks((tasks) => tasks.filter((it) => it.id !== id));
@@ -36,6 +37,20 @@ function Task(props: TaskProps) {
         return it;
       })
     );
+  };
+
+  const keyUp = (ev) => {
+    if (ev.key === 'Enter') {
+      props.setTasks((tasks) =>
+        tasks.map((it) => {
+          const prevObj = it;
+          if (it === props.task) {
+            return { ...prevObj, description: editDescription, isEditing: !it.isEditing };
+          }
+          return it;
+        })
+      );
+    }
   };
 
   const setIsCompleted = useCallback(
@@ -68,7 +83,15 @@ function Task(props: TaskProps) {
         <button type="button" className="icon icon-edit" onClick={editTask} />
         <button type="button" className="icon icon-destroy" onClick={removeTask} />
       </div>
-      {isEditing && <input type="text" className="edit" value={description} />}
+      {isEditing && (
+        <input
+          type="text"
+          className="edit"
+          value={editDescription}
+          onKeyUp={keyUp}
+          onChange={(ev) => setEditDescription(ev.currentTarget.value)}
+        />
+      )}
     </li>
   );
 }

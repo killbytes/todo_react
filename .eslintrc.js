@@ -31,12 +31,16 @@ module.exports = {
       "jsx": true
     }
   },
-  plugins: [
+plugins: [
     'react',
     'prettier',
     'import',
     'jsx-a11y'
   ],
+parser: '@typescript-eslint/parser',
+ecmaFeatures: {
+  jsx: true
+},
   rules: {
     'prettier/prettier': [
       'error',
