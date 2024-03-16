@@ -9,7 +9,7 @@ module.exports = {
       env: {
         node: true
       },
-      files: ['.eslintrc.{js,cjs}'],
+      files: ['.eslintrc.{js,cjs,ts,cts}'],
       parserOptions: {
         sourceType: 'script'
       }
@@ -20,6 +20,10 @@ module.exports = {
     sourceType: 'module'
   },
   plugins: ['react'],
+  parser: '@typescript-eslint/parser',
+  ecmaFeatures: {
+    jsx: true
+  },
   rules: {
     'prettier/prettier': [
       'error',
