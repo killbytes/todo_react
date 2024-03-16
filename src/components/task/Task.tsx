@@ -1,7 +1,7 @@
 import './task.css';
 import { TTask } from 'src/components/app/App';
 import { formatDistanceToNow } from 'date-fns';
-import { useCallback, useState } from 'react';
+import React from 'react';
 import { SetterOrUpdater } from '../../utils/types';
 // import { compareAsc, format } from "date-fns";
 
@@ -11,12 +11,108 @@ const mapTaskStateToClassName = (task: TTask) => {
   return '';
 };
 
-
 type TaskProps = {
   task: TTask;
   setTasks: SetterOrUpdater<TTask[]>;
 };
+type TasksState = {
+  editDescription: string;
+};
 
+class Task extends React.Component<TaskProps, TasksState> {
+  constructor(props: TaskProps) {
+    super(props);
+    this.state = {
+      editDescription: this.props.task.description,
+    };
+  }
+
+  setEditDescription = (editDescription) => {
+    this.setState((prevState) => ({
+      ...prevState,
+      editDescription,
+    }));
+  };
+
+  setIsCompleted = (isCompleted: boolean) => {
+    this.props.setTasks((prevTasks) =>
+      prevTasks.map((prevTask) => {
+        if (prevTask.id === this.props.task.id) {
+          return { ...prevTask, isCompleted };
+        }
+        return prevTask;
+      })
+    );
+  };
+
+  finishEdit = (ev: React.KeyboardEvent) => {
+    if (ev.key === 'Enter') {
+      this.props.setTasks((tasks) =>
+        tasks.map((prevTask) => {
+          if (prevTask === this.props.task) {
+            return {
+              ...prevTask,
+              description: this.state.editDescription,
+              isEditing: false,
+            };
+          }
+          return prevTask;
+        })
+      );
+    }
+  };
+
+  editTask() {
+    this.props.setTasks((tasks) =>
+      tasks.map((prevTask) => {
+        if (prevTask === this.props.task) {
+          return {
+            ...prevTask,
+            isEditing: true,
+          };
+        }
+        return prevTask;
+      })
+    );
+  }
+
+  removeTask = () => {
+    const { id } = this.props.task;
+    this.props.setTasks((tasks) => tasks.filter((it) => it.id !== id));
+  };
+
+  override render() {
+    return (
+      <li className={mapTaskStateToClassName(this.props.task)}>
+        <div className="view">
+          <input
+            onChange={(ev) => this.setIsCompleted(ev.currentTarget.checked)}
+            className="toggle"
+            type="checkbox"
+            checked={this.props.task.isCompleted}
+          />
+          <label>
+            <span className="description">{this.props.task.description}</span>
+            <span className="created">{formatDistanceToNow(this.props.task.createdAt)}</span>
+          </label>
+          <button type="button" className="icon icon-edit" onClick={this.editTask.bind(this)} />
+          <button type="button" className="icon icon-destroy" onClick={this.removeTask} />
+        </div>
+        {this.props.task.isEditing && (
+          <input
+            type="text"
+            className="edit"
+            value={this.state.editDescription}
+            onKeyUp={this.finishEdit}
+            onChange={(ev) => this.setEditDescription(ev.currentTarget.value)}
+          />
+        )}
+      </li>
+    );
+  }
+}
+
+/*
 function Task(props: TaskProps) {
   const {
     task: { id, isCompleted, isEditing, createdAt, description },
@@ -40,7 +136,7 @@ function Task(props: TaskProps) {
     );
   };
 
-  const keyUp = (ev) => {
+  const keyUp = (ev: React.KeyboardEvent) => {
     if (ev.key === 'Enter') {
       props.setTasks((tasks) =>
         tasks.map((it) => {
@@ -96,5 +192,6 @@ function Task(props: TaskProps) {
     </li>
   );
 }
+*/
 
 export default Task;
