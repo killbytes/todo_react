@@ -1,8 +1,8 @@
 import './task.css';
-import { TTask } from 'src/components/app/App';
-import { formatDistanceToNow } from 'date-fns';
-import { SetterOrUpdater } from '../../utils/types';
-import { useCallback } from 'react';
+import {TTask} from 'src/components/app/App';
+import {formatDistanceToNow} from 'date-fns';
+import {SetterOrUpdater} from '../../utils/types';
+import {useCallback, useState} from 'react';
 // import { compareAsc, format } from "date-fns";
 
 type TaskProps = {
@@ -11,7 +11,9 @@ type TaskProps = {
 };
 
 function Task(props: TaskProps) {
-  const { id, isCompleted, isEditing, createdAt, description } = props.task;
+  const {id, isCompleted, isEditing, createdAt, description} = props.task;
+  const [editDescription, setEditDescription] = useState(description);
+
 
   const removeTask = () => {
     props.setTasks((tasks) => tasks.filter((it) => it.id !== id));
@@ -21,14 +23,28 @@ function Task(props: TaskProps) {
     props.setTasks((tasks) =>
       tasks.map((it) => {
         const prevObj = it;
-        if ( it === props.task ) {
-            console.log(it)
-          return { ...prevObj, isEditing: !it.isEditing };
+        if (it === props.task) {
+          console.log(it)
+          return {...prevObj, isEditing: !it.isEditing};
         }
         return it;
       })
     );
   };
+
+  const keyUp = (ev) => {
+    if (ev.key === 'Enter') {
+      props.setTasks((tasks) =>
+        tasks.map((it) => {
+          const prevObj = it;
+          if (it === props.task) {
+            return {...prevObj, description: editDescription, isEditing: !it.isEditing};
+          }
+          return it;
+        })
+      );
+    }
+  }
 
   const setIsCompleted = useCallback(
     (isCompleted: boolean) =>
@@ -36,7 +52,7 @@ function Task(props: TaskProps) {
         prevTasks.map((task) => {
           if (task.id === id) {
             const prevObj = task;
-            return { ...prevObj, isCompleted: isCompleted };
+            return {...prevObj, isCompleted: isCompleted};
           }
           return task;
         })
@@ -60,7 +76,13 @@ function Task(props: TaskProps) {
         <button className="icon icon-edit" onClick={editTask}></button>
         <button className="icon icon-destroy" onClick={removeTask}></button>
       </div>
-      {isEditing && <input type="text" className="edit" value={description} />}
+      {isEditing && <input
+        type="text"
+        className="edit"
+        value={editDescription}
+        onKeyUp={keyUp}
+        onChange={(ev) => setEditDescription(ev.currentTarget.value)}
+      />}
     </li>
   );
 }
