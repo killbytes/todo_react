@@ -11,6 +11,7 @@ const mapTaskStateToClassName = (task: TTask) => {
   return '';
 };
 
+
 type TaskProps = {
   task: TTask;
   setTasks: SetterOrUpdater<TTask[]>;
