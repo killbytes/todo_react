@@ -21,8 +21,8 @@ function Task(props: TaskProps) {
     props.setTasks((tasks) =>
       tasks.map((it) => {
         const prevObj = it;
-        if ( it === props.task ) {
-            console.log(it)
+        if (it === props.task) {
+          console.log(it);
           return { ...prevObj, isEditing: !it.isEditing };
         }
         return it;

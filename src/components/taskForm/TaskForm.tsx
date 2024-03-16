@@ -30,8 +30,7 @@ function TaskForm(props: TaskFormProps) {
         onSubmit={(ev) => {
           ev.preventDefault();
           addTask();
-        }}
-      >
+        }}>
         <h1>Todos</h1>
         <input
           className="new-todo"
