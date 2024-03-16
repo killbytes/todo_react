@@ -1,8 +1,8 @@
 import './taskList.css';
+import { useMemo } from 'react';
 import { TTask, TTasksFilter } from '../app/App';
 import Task from '../task/Task';
 import { SetterOrUpdater } from '../../utils/types';
-import { useMemo } from 'react';
 
 type TaskListProps = {
   tasks: TTask[];

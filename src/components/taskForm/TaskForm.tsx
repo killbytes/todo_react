@@ -1,8 +1,8 @@
 import './taskForm.css';
-import { TTask } from '../app/App';
-import { SetterOrUpdater } from '../../utils/types';
 import { useState } from 'react';
 import * as uuid from 'uuid';
+import { TTask } from '../app/App';
+import { SetterOrUpdater } from '../../utils/types';
 
 type TaskFormProps = {
   setTasks: SetterOrUpdater<TTask[]>;
@@ -18,9 +18,9 @@ function TaskForm(props: TaskFormProps) {
         isCompleted: false,
         isEditing: false,
         createdAt: new Date(),
-        description: description
+        description,
       },
-      ...tasks
+      ...tasks,
     ]);
 
   return (
@@ -36,7 +36,6 @@ function TaskForm(props: TaskFormProps) {
         <input
           className="new-todo"
           placeholder="What needs to be done?"
-          autoFocus
           value={description}
           // onKeyUp={ev={
           //     if (ev.key === 'Enter') addTask()

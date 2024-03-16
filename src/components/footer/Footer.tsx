@@ -12,15 +12,15 @@ type FooterProps = {
 
 function Footer(props: FooterProps) {
   return (
-    <>
-      <footer className="footer">
-        <span className="todo-count">1 items left</span>
-        <ul className="filters">
-          <TasksFilter filter={props.filter} setFilter={props.setFilter} />
-        </ul>
-        <button className="clear-completed">Clear completed</button>
-      </footer>
-    </>
+    <footer className="footer">
+      <span className="todo-count">1 items left</span>
+      <ul className="filters">
+        <TasksFilter filter={props.filter} setFilter={props.setFilter} />
+      </ul>
+      <button type="button" className="clear-completed">
+        Clear completed
+      </button>
+    </footer>
   );
 }
 
