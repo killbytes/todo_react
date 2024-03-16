@@ -66,6 +66,7 @@ ecmaFeatures: {
     "jsx-a11y/label-has-associated-control": 'off',
     "jsx-a11y/control-has-associated-label": 'off',
     "react/sort-comp": 'off',
+    "class-methods-use-this": 'off',
   },
   settings: {
     'import/resolver': {
