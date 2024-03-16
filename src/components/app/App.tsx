@@ -1,9 +1,9 @@
+import { useState } from 'react';
 import Footer from '../footer/Footer';
 import TaskForm from '../taskForm/TaskForm';
 import TaskList from '../taskList/taskList';
 // import Task from '../task/Task';
 import './app.css';
-import { useState } from 'react';
 
 export type TTask = {
   id: string;
@@ -21,22 +21,22 @@ const initialTasks: TTask[] = [
     isCompleted: false,
     isEditing: true,
     createdAt: new Date(),
-    description: 'Task 1'
+    description: 'Task 1',
   },
   {
     id: '2',
     isCompleted: true,
     isEditing: false,
     createdAt: new Date(),
-    description: 'Task 2'
+    description: 'Task 2',
   },
   {
     id: '3',
     isCompleted: false,
     isEditing: false,
     createdAt: new Date(),
-    description: 'Task 3'
-  }
+    description: 'Task 3',
+  },
 ];
 
 function App() {
@@ -48,7 +48,7 @@ function App() {
       <TaskForm setTasks={setTasks} />
       <section className="main">
         <ul className="todo-list">
-          {/*<Task />*/}
+          {/* <Task /> */}
           <TaskList filter={filter} tasks={tasks} setTasks={setTasks} />
         </ul>
       </section>

@@ -12,6 +12,7 @@ function TasksFilter(props: TasksFooterProps) {
     <>
       <li>
         <button
+          type="button"
           className={props.filter === 'all' ? 'selected' : ''}
           onClick={() => props.setFilter('all')}
         >
@@ -20,6 +21,7 @@ function TasksFilter(props: TasksFooterProps) {
       </li>
       <li>
         <button
+          type="button"
           className={props.filter === 'active' ? 'selected' : ''}
           onClick={() => props.setFilter('active')}
         >
@@ -28,6 +30,7 @@ function TasksFilter(props: TasksFooterProps) {
       </li>
       <li>
         <button
+          type="button"
           className={props.filter === 'completed' ? 'selected' : ''}
           onClick={() => props.setFilter('completed')}
         >
