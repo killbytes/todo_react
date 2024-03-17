@@ -77,15 +77,8 @@ module.exports = {
     'import/order': [
       2,
       {
-        'groups': [
-          "builtin",
-          "external",
-          "internal",
-          "parent",
-          "sibling",
-          "index"
-        ],
-        'newlines-between': 'always'
+        groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
+        'newlines-between': 'always',
       },
     ],
   },
@@ -93,7 +86,7 @@ module.exports = {
     'import/resolver': {
       node: {
         extensions: ['.js', '.jsx', '.ts', '.tsx'],
-        moduleDirectory: ['node_modules', 'src/']
+        moduleDirectory: ['node_modules', 'src/'],
       },
     },
   },
