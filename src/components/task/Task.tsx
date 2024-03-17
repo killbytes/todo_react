@@ -8,6 +8,7 @@ import { SetterOrUpdater } from '../../utils/types';
 const mapTaskStateToClassName = (task: TTask) => {
   if (task.isEditing) return 'editing';
   if (task.isCompleted) return 'completed';
+  if (!task.isCompleted) return 'active';
   return '';
 };
 
