@@ -41,8 +41,12 @@ const initialTasks: TTask[] = [
 ];
 
 function App() {
+  // initialTasks.forEach(element) => {
+  //   console.log(!element.isCompleted);
+  // };
   const [tasks, setTasks] = useState(initialTasks);
   const [filter, setFilter] = useState('all' as TTasksFilter);
+  // const [countItems, setCountItems] = useState();
 
   return (
     <section className="todoapp">

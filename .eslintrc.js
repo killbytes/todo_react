@@ -53,6 +53,7 @@ module.exports = {
     'jsx-a11y/control-has-associated-label': 'off',
     'react/sort-comp': 'off',
     'class-methods-use-this': 'off',
+    'react/prefer-stateless-function': 'off',
     'spaced-comment': 'off',
     // disable semicolons - set it in prettier
     //'semi': 'off',
@@ -76,7 +77,7 @@ module.exports = {
     'import/order': [
       2,
       {
-        "groups": [
+        'groups': [
           "builtin",
           "external",
           "internal",
@@ -84,15 +85,15 @@ module.exports = {
           "sibling",
           "index"
         ],
-        "newlines-between": "always"
-      }
-    ]
+        'newlines-between': 'always'
+      },
+    ],
   },
   settings: {
     'import/resolver': {
       node: {
         extensions: ['.js', '.jsx', '.ts', '.tsx'],
-        moduleDirectory: ["node_modules", "src/"]
+        moduleDirectory: ['node_modules', 'src/']
       },
     },
   },
