@@ -2,7 +2,7 @@ import './taskForm.css';
 import React from 'react';
 import * as uuid from 'uuid';
 
-import { TTask } from '../app/App';
+import { TTask } from '../App/App';
 import { SetterOrUpdater } from '../../utils/types';
 
 type TaskFormProps = {

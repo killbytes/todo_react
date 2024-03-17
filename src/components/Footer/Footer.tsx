@@ -2,8 +2,8 @@ import React from 'react';
 // eslint-disable-next-line prettier/prettier
 import './footer.css';
 
-import TasksFilter from '../tasksFilter/TasksFilter';
-import { TTasksFilter } from '../app/App';
+import TasksFilter from '../TasksFilter/TasksFilter';
+import { TTasksFilter } from '../App/App';
 import { SetterOrUpdater } from '../../utils/types';
 
 type FooterProps = {

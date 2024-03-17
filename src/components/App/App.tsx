@@ -1,9 +1,9 @@
 import { useState } from 'react';
 
-import Footer from '../footer/Footer';
-import TaskForm from '../taskForm/TaskForm';
-import TaskList from '../taskList/taskList';
-// import Task from '../task/Task';
+import Footer from '../Footer/Footer';
+import TaskForm from '../TaskForm/TaskForm';
+import TaskList from '../TaskList/TaskList';
+// import Task from '../Task/Task';
 import './app.css';
 
 export type TTask = {

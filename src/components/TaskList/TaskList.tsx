@@ -1,8 +1,8 @@
 import './taskList.css';
 import React from 'react';
 
-import { TTask, TTasksFilter } from '../app/App';
-import Task from '../task/Task';
+import { TTask, TTasksFilter } from '../App/App';
+import Task from '../Task/Task';
 import { SetterOrUpdater } from '../../utils/types';
 
 type TaskListProps = {
@@ -67,7 +67,7 @@ function TaskList(props: TaskListProps) {
   return (
     <>
       {filterTasks.map((it) => (
-        <Task key={it.id} task={it} setTasks={props.setTasks} />
+        <Task key={it.id} Task={it} setTasks={props.setTasks} />
       ))}
     </>
   );

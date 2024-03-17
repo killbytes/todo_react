@@ -1,5 +1,5 @@
 import './task.css';
-import { TTask } from 'src/components/app/App';
+import { TTask } from 'src/components/App/App';
 import { formatDistanceToNow } from 'date-fns';
 import React from 'react';
 
@@ -117,7 +117,7 @@ class Task extends React.Component<TaskProps, TasksState> {
 /*
 function Task(props: TaskProps) {
   const {
-    task: { id, isCompleted, isEditing, createdAt, description },
+    Task: { id, isCompleted, isEditing, createdAt, description },
     setTasks,
   } = props;
   const [editDescription, setEditDescription] = useState(description);
@@ -130,7 +130,7 @@ function Task(props: TaskProps) {
     props.setTasks((tasks) =>
       tasks.map((it) => {
         const prevObj = it;
-        if (it === props.task) {
+        if (it === props.Task) {
           return { ...prevObj, isEditing: !it.isEditing };
         }
         return it;
@@ -143,7 +143,7 @@ function Task(props: TaskProps) {
       props.setTasks((tasks) =>
         tasks.map((it) => {
           const prevObj = it;
-          if (it === props.task) {
+          if (it === props.Task) {
             return { ...prevObj, description: editDescription, isEditing: !it.isEditing };
           }
           return it;
@@ -155,19 +155,19 @@ function Task(props: TaskProps) {
   const setIsCompleted = useCallback(
     (isCompleted: boolean) =>
       setTasks((prevTasks) =>
-        prevTasks.map((task) => {
-          if (task.id === id) {
-            const prevObj = task;
+        prevTasks.map((Task) => {
+          if (Task.id === id) {
+            const prevObj = Task;
             return { ...prevObj, isCompleted };
           }
-          return task;
+          return Task;
         })
       ),
     [id, setTasks]
   );
 
   return (
-    <li className={mapTaskStateToClassName(props.task)}>
+    <li className={mapTaskStateToClassName(props.Task)}>
       <div className="view">
         <input
           onChange={(ev) => setIsCompleted(ev.currentTarget.checked)}
