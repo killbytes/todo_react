@@ -3,12 +3,14 @@ import React from 'react';
 import './footer.css';
 
 import TasksFilter from '../TasksFilter/TasksFilter';
-import { TTasksFilter } from '../App/App';
+import { TTask, TTasksFilter } from '../App/App';
 import { SetterOrUpdater } from '../../utils/types';
 
 type FooterProps = {
   filter: TTasksFilter;
   setFilter: SetterOrUpdater<TTasksFilter>;
+  taskCount: number;
+  setTasks: SetterOrUpdater<TTask[]>;
 };
 type FooterState = object;
 
@@ -18,14 +20,18 @@ class Footer extends React.Component<FooterProps, FooterState> {
     this.state = {};
   }
 
+  clearCompleted = () => {
+    this.props.setTasks((prevTasks) => prevTasks.filter((it) => !it.isCompleted));
+  };
+
   override render() {
     return (
       <footer className="footer">
-        <span className="todo-count">1 items left</span>
+        <span className="todo-count">{this.props.taskCount} items left</span>
         <ul className="filters">
           <TasksFilter filter={this.props.filter} setFilter={this.props.setFilter} />
         </ul>
-        <button type="button" className="clear-completed">
+        <button type="button" className="clear-completed" onClick={this.clearCompleted}>
           Clear completed
         </button>
       </footer>
