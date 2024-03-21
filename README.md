@@ -1,4 +1,4 @@
-[Todo class link](https://todo-react-func.vercel.app/ "Click")
+[Todo func link](https://todo-react-func.vercel.app/ "Click")
 
 # Getting Started with Create React App
 
