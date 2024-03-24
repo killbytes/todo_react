@@ -12,7 +12,11 @@ type TaskFormState = {
   newTask: string;
 };
 
-class TaskForm extends React.Component<TaskFormProps, TaskFormState> {
+/*
+React.PureComponent - чистая классовая компонента, будет перерендерится только если изменились стэйт или пропсы.
+Обычная компонента ещё перерендерится если просто перерендерится её родитель.
+*/
+class TaskForm extends React.PureComponent<TaskFormProps, TaskFormState> {
   constructor(props) {
     super(props);
     this.state = {
@@ -69,9 +73,10 @@ class TaskForm extends React.Component<TaskFormProps, TaskFormState> {
     );
   }
 }
-/*
 
-function TaskForm(props: TaskFormProps) {
+/*
+const TaskFormFun = React.memo(
+(props: TaskFormProps) => {
   const [description, setDescription] = useState('');
 
   const addTask = () =>
@@ -110,7 +115,7 @@ function TaskForm(props: TaskFormProps) {
       </form>
     </header>
   );
-}
+});
 */
 
 export default TaskForm;
