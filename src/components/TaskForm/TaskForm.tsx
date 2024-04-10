@@ -47,6 +47,7 @@ class TaskForm extends React.PureComponent<TaskFormProps, TaskFormState> {
     return (
       <header className="header">
         <form
+          className="new-todo-form"
           style={{ display: 'contents' }}
           onSubmit={(ev) => {
             ev.preventDefault();
@@ -61,13 +62,15 @@ class TaskForm extends React.PureComponent<TaskFormProps, TaskFormState> {
           <h1>Todos</h1>
           <input
             className="new-todo"
-            placeholder="What needs to be done?"
+            placeholder="Task"
             value={this.state.newTask}
             // onKeyUp={(ev: React.KeyboardEvent) => {
             //     if (ev.key === 'Enter') addTask()
             // }}
             onChange={(ev) => this.setDescription(ev.currentTarget.value)}
           />
+          <input className="new-todo-form__timer" placeholder="Min" />
+          <input className="new-todo-form__timer" placeholder="Sec" />
         </form>
       </header>
     );

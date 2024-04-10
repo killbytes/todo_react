@@ -95,6 +95,11 @@ class Task extends React.Component<TaskProps, TasksState> {
           />
           <label>
             <span className="description">{this.props.task.description}</span>
+            <span className="description timer">
+              <button type="button" className="icon icon-play" />
+              <button type="button" className="icon icon-pause" />
+              12:25
+            </span>
             <span className="created">{formatDistanceToNow(this.props.task.createdAt)}</span>
           </label>
           <button type="button" className="icon icon-edit" onClick={this.editTask.bind(this)} />
