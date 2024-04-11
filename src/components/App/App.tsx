@@ -13,6 +13,14 @@ export type TTask = {
   isEditing: boolean;
   createdAt: Date;
   description: string;
+  timer:
+    | undefined
+    | {
+        createdTime: Date;
+        pauseTime: Date | undefined;
+        pauseSum: number;
+        duration: number;
+      };
 };
 
 export type TTasksFilter = 'all' | 'active' | 'completed';
@@ -23,6 +31,7 @@ const initialTasks: TTask[] = [
     isEditing: true,
     createdAt: new Date(),
     description: 'Task 1',
+    timer: undefined,
   },
   {
     id: '2',
@@ -30,6 +39,12 @@ const initialTasks: TTask[] = [
     isEditing: false,
     createdAt: new Date(),
     description: 'Task 2',
+    timer: {
+      createdTime: new Date(),
+      pauseTime: undefined,
+      pauseSum: 0,
+      duration: 600000,
+    },
   },
   {
     id: '3',
@@ -37,6 +52,12 @@ const initialTasks: TTask[] = [
     isEditing: false,
     createdAt: new Date(),
     description: 'Task 3',
+    timer: {
+      createdTime: new Date(),
+      pauseTime: new Date(),
+      pauseSum: 0,
+      duration: 600000,
+    },
   },
 ];
 

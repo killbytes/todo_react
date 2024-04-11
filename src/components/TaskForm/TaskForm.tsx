@@ -10,6 +10,8 @@ type TaskFormProps = {
 };
 type TaskFormState = {
   newTask: string;
+  mins: string;
+  secs: string;
 };
 
 /*
@@ -21,29 +23,45 @@ class TaskForm extends React.PureComponent<TaskFormProps, TaskFormState> {
     super(props);
     this.state = {
       newTask: '',
+      mins: '',
+      secs: '',
     };
   }
 
-  setDescription = (newTask: string) => {
-    this.setState((prevState) => ({
-      ...prevState,
-      newTask,
-    }));
+  addTask = () => {
+    const newTask: TTask = {
+      id: uuid.v4(),
+      isCompleted: false,
+      isEditing: false,
+      createdAt: new Date(),
+      description: this.state.newTask,
+      timer: undefined,
+    };
+    const timer: TTask['timer'] = {
+      createdTime: new Date(),
+      pauseTime: undefined,
+      pauseSum: 0,
+      duration: 0,
+    };
+    let hasTimer = false;
+    const mins = +this.state.mins;
+    if (this.state.mins && Number.isFinite(mins) && mins >= 0) {
+      timer.duration += mins * 60 * 1000;
+      hasTimer = true;
+    }
+    const secs = +this.state.secs;
+    if (this.state.secs && Number.isFinite(secs) && secs >= 0) {
+      timer.duration += secs * 1000;
+      hasTimer = true;
+    }
+    if (hasTimer) {
+      newTask.timer = timer;
+    }
+    this.props.setTasks((tasks) => [newTask, ...tasks]);
   };
 
-  addTask = () =>
-    this.props.setTasks((tasks) => [
-      {
-        id: uuid.v4(),
-        isCompleted: false,
-        isEditing: false,
-        createdAt: new Date(),
-        description: this.state.newTask,
-      },
-      ...tasks,
-    ]);
-
   override render() {
+    const { mins, secs } = this.state;
     return (
       <header className="header">
         <form
@@ -53,13 +71,16 @@ class TaskForm extends React.PureComponent<TaskFormProps, TaskFormState> {
             ev.preventDefault();
             if (this.state.newTask) {
               this.addTask();
-              this.setDescription('');
+              this.setState({ newTask: '' });
             }
             // const currenTarget = ev.currentTarget as HTMLFormElement;
             // currenTarget.reset();
           }}
         >
           <h1>Todos</h1>
+          <button type="submit" style={{ display: 'none' }}>
+            Submit
+          </button>
           <input
             className="new-todo"
             placeholder="Task"
@@ -67,10 +88,20 @@ class TaskForm extends React.PureComponent<TaskFormProps, TaskFormState> {
             // onKeyUp={(ev: React.KeyboardEvent) => {
             //     if (ev.key === 'Enter') addTask()
             // }}
-            onChange={(ev) => this.setDescription(ev.currentTarget.value)}
+            onChange={(ev) => this.setState({ newTask: ev.currentTarget.value })}
           />
-          <input className="new-todo-form__timer" placeholder="Min" />
-          <input className="new-todo-form__timer" placeholder="Sec" />
+          <input
+            className="new-todo-form__timer"
+            placeholder="Min"
+            value={mins}
+            onChange={(ev) => this.setState({ mins: ev.currentTarget.value })}
+          />
+          <input
+            className="new-todo-form__timer"
+            placeholder="Sec"
+            value={secs}
+            onChange={(ev) => this.setState({ secs: ev.currentTarget.value })}
+          />
         </form>
       </header>
     );

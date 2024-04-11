@@ -12,6 +12,17 @@ const mapTaskStateToClassName = (task: TTask) => {
   if (!task.isCompleted) return 'active';
   return '';
 };
+function getTimeFromTimer(timer: TTask['timer']) {
+  if (!timer) return undefined;
+  const start = +timer.createdTime;
+  const end = timer.pauseTime ? +timer.pauseTime : +new Date();
+  const pauseTime = timer.pauseSum;
+  let remaining = timer.duration - (end - start - pauseTime);
+  if (remaining < 0) remaining = 0;
+  const mins = Math.floor(remaining / 1000 / 60);
+  const secs = Math.floor(remaining / 1000 - mins * 60);
+  return [mins, secs] as [number, number];
+}
 
 type TaskProps = {
   task: TTask;
@@ -19,6 +30,7 @@ type TaskProps = {
 };
 type TasksState = {
   editDescription: string;
+  time: [mins: number, secs: number] | undefined;
 };
 
 class Task extends React.Component<TaskProps, TasksState> {
@@ -26,7 +38,18 @@ class Task extends React.Component<TaskProps, TasksState> {
     super(props);
     this.state = {
       editDescription: this.props.task.description,
+      time: getTimeFromTimer(this.props.task.timer),
     };
+  }
+
+  intervalId: NodeJS.Timeout | undefined;
+
+  override componentDidMount() {
+    this.intervalId = setInterval(() => this.setState({ time: getTimeFromTimer(this.props.task.timer) }), 1000);
+  }
+
+  override componentWillUnmount() {
+    clearInterval(this.intervalId);
   }
 
   setEditDescription = (editDescription) => {
@@ -78,12 +101,51 @@ class Task extends React.Component<TaskProps, TasksState> {
     );
   }
 
+  pauseTimer = () => {
+    const { timer } = this.props.task;
+    if (timer && !timer.pauseTime)
+      this.props.setTasks((tasks) =>
+        tasks.map((it) => {
+          if (it.id === this.props.task.id)
+            return {
+              ...this.props.task,
+              timer: {
+                ...timer,
+                pauseTime: new Date(),
+              },
+            };
+          return it;
+        })
+      );
+  };
+
+  resumeTimer = () => {
+    const { timer } = this.props.task;
+    if (timer && timer.pauseTime)
+      this.props.setTasks((tasks) =>
+        tasks.map((it) => {
+          if (it.id === this.props.task.id)
+            return {
+              ...this.props.task,
+              timer: {
+                ...timer,
+                pauseTime: undefined,
+                pauseSum: timer.pauseSum + (+new Date() - +timer.pauseTime!),
+              },
+            };
+          return it;
+        })
+      );
+  };
+
   removeTask = () => {
     const { id } = this.props.task;
     this.props.setTasks((tasks) => tasks.filter((it) => it.id !== id));
   };
 
   override render() {
+    const { time } = this.state;
+
     return (
       <li className={mapTaskStateToClassName(this.props.task)}>
         <div className="view">
@@ -93,15 +155,19 @@ class Task extends React.Component<TaskProps, TasksState> {
             type="checkbox"
             checked={this.props.task.isCompleted}
           />
-          <label>
+          <div>
             <span className="description">{this.props.task.description}</span>
-            <span className="description timer">
-              <button type="button" className="icon icon-play" />
-              <button type="button" className="icon icon-pause" />
-              12:25
-            </span>
+            {time && (
+              <span className="description timer">
+                <button type="button" className="icon icon-play" onClick={this.resumeTimer} />
+                <button type="button" className="icon icon-pause" onClick={this.pauseTimer} />
+                <span>
+                  {time[0]}:{time[1]}
+                </span>
+              </span>
+            )}
             <span className="created">{formatDistanceToNow(this.props.task.createdAt)}</span>
-          </label>
+          </div>
           <button type="button" className="icon icon-edit" onClick={this.editTask.bind(this)} />
           <button type="button" className="icon icon-destroy" onClick={this.removeTask} />
         </div>
