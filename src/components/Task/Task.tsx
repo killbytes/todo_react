@@ -155,7 +155,7 @@ class Task extends React.Component<TaskProps, TasksState> {
             type="checkbox"
             checked={this.props.task.isCompleted}
           />
-          <div>
+          <label>
             <span className="description">{this.props.task.description}</span>
             {time && (
               <span className="description timer">
@@ -167,7 +167,7 @@ class Task extends React.Component<TaskProps, TasksState> {
               </span>
             )}
             <span className="created">{formatDistanceToNow(this.props.task.createdAt)}</span>
-          </div>
+          </label>
           <button type="button" className="icon icon-edit" onClick={this.editTask.bind(this)} />
           <button type="button" className="icon icon-destroy" onClick={this.removeTask} />
         </div>
