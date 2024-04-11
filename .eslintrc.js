@@ -51,6 +51,7 @@ module.exports = {
     'no-shadow': 'off',
     'jsx-a11y/label-has-associated-control': 'off',
     'jsx-a11y/control-has-associated-label': 'off',
+    'jsx-a11y/no-autofocus': 'off',
     'react/sort-comp': 'off',
     'class-methods-use-this': 'off',
     'react/prefer-stateless-function': 'off',

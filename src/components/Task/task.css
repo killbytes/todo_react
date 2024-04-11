@@ -9,3 +9,17 @@ html .clear-completed:active {
 .clear-completed:hover {
     text-decoration: underline;
 }
+
+.timer {
+    position: unset;
+    font-size: 13px;
+}
+
+.timer button {
+    position: unset !important;
+    margin-right: 5px !important;
+}
+
+.timer .icon-pause {
+    margin-right: 10px !important;
+}
